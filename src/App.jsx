@@ -296,10 +296,20 @@ async function supaGetUserData(uid) {
 }
 
 async function supaUpsertUserData(data) {
-  return supaFetch("/rest/v1/user_data?on_conflict=user_id", {
-    method: "POST", prefer: "resolution=merge-duplicates",
-    body: data,
-  });
+  // Try PATCH (update) first, then INSERT if no row exists
+  var existing = await supaFetch("/rest/v1/user_data?user_id=eq."+data.user_id+"&select=id");
+  if (Array.isArray(existing) && existing.length > 0) {
+    return supaFetch("/rest/v1/user_data?user_id=eq."+data.user_id, {
+      method: "PATCH",
+      body: data,
+    });
+  } else {
+    return supaFetch("/rest/v1/user_data", {
+      method: "POST",
+      prefer: "resolution=merge-duplicates",
+      body: data,
+    });
+  }
 }
 
 // Dives
