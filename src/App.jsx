@@ -296,7 +296,7 @@ async function supaGetUserData(uid) {
 }
 
 async function supaUpsertUserData(data) {
-  return supaFetch("/rest/v1/user_data", {
+  return supaFetch("/rest/v1/user_data?on_conflict=user_id", {
     method: "POST", prefer: "resolution=merge-duplicates",
     body: data,
   });
