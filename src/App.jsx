@@ -2406,7 +2406,7 @@ export default function App() {
         {tab==="profile" && (
           <div className="scroll" style={{paddingTop:0}}>
             <div className="phdr">
-              <div className="avatar">{udata ? udata.name[0].toUpperCase() : "?"}</div>
+              <div className="avatar">{udata && udata.name ? udata.name[0].toUpperCase() : "?"}</div>
               <div>
                 <div style={{fontFamily:"'DM Serif Display',serif",fontSize:20}}>{udata ? udata.name : ""}</div>
                 <div style={{fontSize:11,color:"rgba(255,255,255,.4)"}}>Member since {udata ? udata.joined : ""}</div>
